@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium AVI A-P-P</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #2600ff, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      color: white;
+      font-size: 1rem;
+    }
+
+    .whatsapp {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rules {
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    h1 {
+      color: white;
+      font-size: 1.5rem;
+      margin-top: 10px;
+    }
+
+    .circle-wrapper {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .circle1 {
+      width: 280px;
+      height: 280px;
+      border: 6px dashed white;
+      animation: spin 10s linear infinite;
+    }
+
+    .circle2 {
+      width: 240px;
+      height: 240px;
+      border: 6px solid white;
+    }
+
+    .circle3 {
+      width: 200px;
+      height: 200px;
+      border: 6px dashed red;
+    }
+
+    .circle4 {
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle at top left, #ff4b4b, #b30000);
+      box-shadow: inset -4px -4px 10px rgba(255,255,255,0.3),
+                  inset 4px 4px 10px rgba(0,0,0,0.3),
+                  0 0 10px rgba(255, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .prediction {
+      color: #0033ff;
+      font-weight: bold;
+      font-size: 2rem;
+      text-shadow: 1px 1px 2px white;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .loading-ring {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border: 6px solid transparent;
+      border-top: 6px solid #00ffcc;
+      border-right: 6px solid #00ccff;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+    }
+
+    button {
+      margin-top: 40px;
+      padding: 12px 40px;
+      font-size: 1.2rem;
+      background: linear-gradient(45deg, #00ffff, #ff00ff);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      animation: colorPulse 4s linear infinite;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    @keyframes colorPulse {
+      0%   { background: linear-gradient(45deg, #00ffff, #ff00ff); }
+      25%  { background: linear-gradient(45deg, #ffcc00, #00ffcc); }
+      50%  { background: linear-gradient(45deg, #ff6666, #66ff66); }
+      75%  { background: linear-gradient(45deg, #6600ff, #00ffff); }
+      100% { background: linear-gradient(45deg, #00ffff, #ff00ff); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    /* Modal */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+    }
+
+    #voucherInput {
+      padding: 10px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    #modal-content button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #0066ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #errorMsg {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="whatsapp">
+      <svg viewBox="0 0 32 32">
+        <path d="M16.001 2.998c-7.732 0-14 6.269-14 14 0 2.474.649 4.894 1.88 7.019l-1.959 5.961 6.115-1.915c2.038 1.114 4.34 1.701 6.726 1.701 7.732 0 14-6.269 14-14s-6.268-14-14-14zm.042 25.209c-2.073 0-4.095-.56-5.87-1.618l-.421-.249-3.635 1.139 1.174-3.589-.275-.442c-1.158-1.857-1.77-4.004-1.77-6.189 0-6.534 5.316-11.85 11.85-11.85 6.533 0 11.849 5.316 11.849 11.85s-5.316 11.85-11.849 11.85zm6.475-8.776c-.354-.177-2.096-1.034-2.421-1.15-.325-.118-.562-.177-.8.178s-.916 1.149-1.123 1.385c-.207.237-.411.266-.765.089-.354-.178-1.495-.55-2.846-1.754-1.05-.938-1.758-2.096-1.965-2.45-.207-.355-.022-.546.155-.723.158-.157.354-.412.531-.618.177-.206.236-.354.354-.59.118-.237.06-.443-.03-.62-.089-.177-.8-1.926-1.096-2.638-.288-.691-.582-.598-.8-.608-.206-.01-.442-.012-.678-.012s-.62.089-.945.443c-.325.355-1.24 1.212-1.24 2.956s1.27 3.427 1.448 3.663c.177.236 2.501 3.815 6.061 5.349.847.365 1.508.583 2.024.745.849.27 1.622.232 2.232.141.681-.102 2.096-.856 2.392-1.681.295-.826.295-1.535.207-1.682-.088-.147-.324-.236-.678-.413z"/>
+      </svg>
+      <span>+258 85 768 1065</span>
+    </div>
+    <div class="rules">THE RULES</div>
+  </header>
+
+  <h1>Premium AVI A-P-P</h1>
+
+  <div class="circle-wrapper">
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+    <div class="loading-ring"></div>
+    <div class="circle circle4">
+      <div class="prediction" id="prediction">1.00x</div>
+    </div>
+  </div>
+
+  <button onclick="nextPrediction()">START</button>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div id="modal-content">
+      <h3>Insira o Voucher</h3>
+      <input id="voucherInput" type="text" placeholder="Digite o código"/>
+      <button onclick="validateVoucher()">Confirmar</button>
+      <p id="errorMsg">Código incorreto!</p>
+    </div>
+  </div>
+
+  <script>
+    let accessGranted = false;
+
+    document.querySelector('.rules').addEventListener('click', () => {
+      document.getElementById('modal').style.display = 'flex';
+    });
+
+    function validateVoucher() {
+      const input = document.getElementById('voucherInput').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      if (input === '.') {
+        accessGranted = true;
+        document.getElementById('modal').style.display = 'none';
+        errorMsg.style.display = 'none';
+        alert('Voucher confirmado! Previsões liberadas.');
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    }
+
+    function nextPrediction() {
+      if (!accessGranted) {
+        alert('Insira o voucher para acessar as previsões.');
+        return;
+      }
+
+      const predictions = ["1.51x", "5.47x", "3.23x", "9.93x", "6.66x", "3.01x"];
+      const predictionElement = document.getElementById("prediction");
+      const rand = Math.floor(Math.random() * predictions.length);
+      predictionElement.textContent = predictions[rand];
+    }
+  </script>
+
+</body>
+</html>
